@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Shree Ganesh General Store</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="topnav-inner">
+    <a href="index.html" class="brand" id="brandName">Shree Ganesh General Store</a>
+    <div class="nav-actions">
+      <a href="index.html" class="nav-link">Home</a>
+      <button class="nav-link cart-btn" id="openCartBtn" style="background:none;border:none;cursor:pointer;">
+        Cart <span class="cart-count" id="cartCount">0</span>
+      </button>
+      <a href="admin.html" class="nav-link">Store Login</a>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <div class="page">
+    <div class="hero">
+      <h1>Fresh stock, fair prices, your local shop.</h1>
+      <p>Browse by category, add what you need, and place your order — pay and collect at the store.</p>
+    </div>
+
+    <div class="category-jump" id="categoryJump"></div>
+
+    <div id="catalog">
+      <!-- category sections injected here -->
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div><strong id="footerStoreName">Shree Ganesh General Store</strong></div>
+    <div id="footerAddress">12, Market Road, Near Bus Stand</div>
+    <div id="footerContact">+91 90000 00000</div>
+  </div>
+</footer>
+
+<!-- Cart drawer -->
+<div class="overlay" id="overlay"></div>
+<aside class="drawer" id="cartDrawer" aria-label="Shopping cart">
+  <div class="drawer-header">
+    <h3>Your Cart</h3>
+    <button class="drawer-close" id="closeCartBtn" aria-label="Close cart">&times;</button>
+  </div>
+  <div class="drawer-body" id="cartBody">
+    <!-- cart items injected here -->
+  </div>
+  <div class="drawer-footer" id="cartFooter">
+    <div class="summary-row"><span>Total items</span><span id="cartItemCount">0</span></div>
+    <div class="summary-row total"><span>Total cost</span><span id="cartTotal">₹0.00</span></div>
+    <div class="glass-surface">
+      <span style="color:#fff;font-size:0.85rem;">Ready to check out?</span>
+      <button class="glass-btn" id="billBtn">Bill</button>
+    </div>
+  </div>
+</aside>
+
+<!-- Billing modal -->
+<div class="modal" id="billModal">
+  <div class="modal-backdrop" id="billBackdrop"></div>
+  <div class="modal-card">
+    <div class="modal-head">
+      <h3>Review Your Bill</h3>
+      <button class="drawer-close" id="closeBillBtn" aria-label="Close">&times;</button>
+    </div>
+    <div class="modal-body">
+      <table class="bill-table">
+        <thead>
+          <tr><th>Item</th><th>Price</th><th>Qty</th><th>Total</th></tr>
+        </thead>
+        <tbody id="billTableBody"></tbody>
+      </table>
+      <div class="bill-totals">
+        <div>Total items: <strong id="billItemCount">0</strong></div>
+        <div class="grand">Total: <span id="billTotal">₹0.00</span></div>
+      </div>
+      <div class="bill-note">
+        No online payment is collected here. Placing this order sends your order details to the store — please pay and collect in person.
+      </div>
+      <div class="glass-surface">
+        <span style="color:#fff;font-size:0.85rem;">Confirm your order</span>
+        <button class="glass-btn" id="orderBtn">Order</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Order confirmation modal -->
+<div class="modal" id="confirmModal">
+  <div class="modal-backdrop" id="confirmBackdrop"></div>
+  <div class="modal-card" style="max-width:420px;">
+    <div class="modal-body" style="padding-top:28px;">
+      <div class="confirm-icon">✅</div>
+      <div class="confirm-text">Order <strong id="confirmOrderNumber"></strong> placed successfully.</div>
+      <div class="confirm-sub">Please contact or visit the store for payment and collection.</div>
+      <div class="glass-surface" style="justify-content:center;gap:14px;flex-wrap:wrap;">
+        <a class="glass-btn small" id="whatsappLink" href="#" target="_blank" rel="noopener">Notify store on WhatsApp</a>
+        <button class="glass-btn small" id="confirmCloseBtn">Continue shopping</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="js/data.js"></script>
+<script src="js/store.js"></script>
+</body>
+</html>

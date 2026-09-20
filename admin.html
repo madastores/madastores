@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Store Admin</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="topnav-inner">
+    <a href="index.html" class="brand">Store Admin</a>
+    <div class="nav-actions">
+      <a href="index.html" class="nav-link">View Store</a>
+      <button class="glass-btn small" id="logoutBtn" style="display:none;">Logout</button>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <!-- Login screen -->
+  <div class="login-wrap" id="loginScreen">
+    <div class="login-card">
+      <h2>Store Login</h2>
+      <p>Sign in to manage products, prices, stock and orders.</p>
+      <div class="form-error" id="loginError"></div>
+      <form id="loginForm">
+        <div class="field">
+          <label for="loginUsername">Username</label>
+          <input type="text" id="loginUsername" autocomplete="username" required />
+        </div>
+        <div class="field">
+          <label for="loginPassword">Password</label>
+          <input type="password" id="loginPassword" autocomplete="current-password" required />
+        </div>
+        <div class="glass-surface">
+          <span style="color:#fff;font-size:0.85rem;">Store Admin Dashboard</span>
+          <button class="glass-btn" type="submit">Login</button>
+        </div>
+      </form>
+      <div class="login-hint">Demo credentials — username: <strong>owner</strong>, password: <strong>store123</strong></div>
+    </div>
+  </div>
+
+  <!-- Dashboard -->
+  <div class="dash-shell" id="dashScreen" style="display:none;">
+    <nav class="dash-tabs">
+      <button class="dash-tab active" data-tab="products">Products</button>
+      <button class="dash-tab" data-tab="categories">Categories</button>
+      <button class="dash-tab" data-tab="stock">Stock</button>
+      <button class="dash-tab" data-tab="orders">Orders</button>
+      <button class="dash-tab" data-tab="settings">Settings</button>
+    </nav>
+
+    <div class="dash-content">
+
+      <!-- Products panel -->
+      <section class="dash-panel active" id="panel-products">
+        <div class="dash-topbar">
+          <div>
+            <h2>Products</h2>
+            <p class="hint">Add new items, edit prices, or remove products from the store.</p>
+          </div>
+        </div>
+
+        <div class="card-block">
+          <h3>Add New Item</h3>
+          <div class="form-error" id="addProductError"></div>
+          <form id="addProductForm">
+            <div class="field">
+              <label for="newProdName">Item name</label>
+              <input type="text" id="newProdName" required />
+            </div>
+            <div class="field">
+              <label for="newProdCategory">Category</label>
+              <select id="newProdCategory" required></select>
+            </div>
+            <div class="field">
+              <label for="newProdPrice">Price (₹)</label>
+              <input type="number" id="newProdPrice" min="0" step="0.01" required />
+            </div>
+            <div class="field">
+              <label for="newProdStock">Stock quantity</label>
+              <input type="number" id="newProdStock" min="0" step="1" required />
+            </div>
+            <div class="field">
+              <label for="newProdImage">Product image (optional)</label>
+              <input type="file" id="newProdImage" accept="image/*" />
+            </div>
+            <div class="field">
+              <label for="newProdDesc">Description (optional)</label>
+              <textarea id="newProdDesc"></textarea>
+            </div>
+            <div class="glass-surface">
+              <span style="color:#fff;font-size:0.85rem;">Appears on the store once added</span>
+              <button class="glass-btn" type="submit">Add Item</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="section-title-row"><h3 style="margin:0;">All products</h3></div>
+        <table class="data-table" id="productsTable">
+          <thead>
+            <tr>
+              <th>Image</th><th>Name</th><th>Category</th><th>Price (₹)</th><th>Stock</th><th>Status</th><th>Actions</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </section>
+
+      <!-- Categories panel -->
+      <section class="dash-panel" id="panel-categories">
+        <h2>Categories</h2>
+        <p class="hint">Organise products into categories customers can browse.</p>
+
+        <div class="inline-form" id="addCategoryForm">
+          <div class="field">
+            <label for="newCatName">New category name</label>
+            <input type="text" id="newCatName" />
+          </div>
+          <button class="glass-btn small" id="addCatBtn" type="button" style="background:rgba(31,61,43,0.85);">Add Category</button>
+        </div>
+        <div class="form-error" id="addCategoryError"></div>
+
+        <table class="data-table" id="categoriesTable">
+          <thead><tr><th>Category</th><th># Products</th><th>Actions</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </section>
+
+      <!-- Stock panel -->
+      <section class="dash-panel" id="panel-stock">
+        <h2>Stock Management</h2>
+        <p class="hint">Add or remove stock, or set an exact quantity for any item.</p>
+        <table class="data-table" id="stockTable">
+          <thead><tr><th>Name</th><th>Current Stock</th><th>Adjust</th><th>Set Exact</th><th>Status</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </section>
+
+      <!-- Orders panel -->
+      <section class="dash-panel" id="panel-orders">
+        <h2>Orders</h2>
+        <p class="hint">View incoming orders and mark them as processed once fulfilled.</p>
+        <div id="ordersList"></div>
+      </section>
+
+      <!-- Settings panel -->
+      <section class="dash-panel" id="panel-settings">
+        <h2>Settings</h2>
+        <p class="hint">These details appear in the store footer and on order notifications.</p>
+
+        <div class="card-block">
+          <h3>Store Details</h3>
+          <div class="form-error" id="settingsError"></div>
+          <form id="settingsForm">
+            <div class="field">
+              <label for="setStoreName">Store name</label>
+              <input type="text" id="setStoreName" required />
+            </div>
+            <div class="field">
+              <label for="setStoreAddress">Store address</label>
+              <input type="text" id="setStoreAddress" required />
+            </div>
+            <div class="field">
+              <label for="setContact">Contact number (shown to customers)</label>
+              <input type="text" id="setContact" required />
+            </div>
+            <div class="field">
+              <label for="setWhatsApp">Owner WhatsApp number (for order alerts, digits only with country code, e.g. 9198xxxxxxx)</label>
+              <input type="text" id="setWhatsApp" />
+            </div>
+            <div class="glass-surface">
+              <span style="color:#fff;font-size:0.85rem;">Visible to customers immediately</span>
+              <button class="glass-btn" type="submit">Save Settings</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="card-block">
+          <h3>Change Password</h3>
+          <div class="form-error" id="passwordError"></div>
+          <form id="passwordForm">
+            <div class="field">
+              <label for="currentPass">Current password</label>
+              <input type="password" id="currentPass" required />
+            </div>
+            <div class="field">
+              <label for="newPass">New password</label>
+              <input type="password" id="newPass" required />
+            </div>
+            <div class="glass-surface">
+              <span style="color:#fff;font-size:0.85rem;">At least 6 characters</span>
+              <button class="glass-btn" type="submit">Update Password</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script src="js/data.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>
